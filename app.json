@@ -32,11 +32,19 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "41a52078-2a02-4f2c-b31c-e7cbad0664b7"
+      }
+    },
+    "owner": "zaxkayd21s-team"
   }
 }
