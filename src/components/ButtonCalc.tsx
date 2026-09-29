@@ -1,7 +1,8 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { SvgProps } from "react-native-svg";
 import { useFonts } from "expo-font";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
+import logick from "@/logic";
 
 interface ButtonProps {
     color: string;
@@ -11,11 +12,13 @@ interface ButtonProps {
         text?: string;
     };
     end: boolean;
+    iventSymbol?: string; 
+    setValue?: React.Dispatch<React.SetStateAction<string[]>>;
+    getValue?: string[]
 }
 
 export default function ButtonCalc(data: ButtonProps) {
     const Icon = data.icon.img;
-
     const [fontsLoaded] = useFonts({
         "SF-Pro-Display-Light": require("../../assets/fonts/SFProDisplay-Light.woff"),
         "SF-Pro-Rounded-Regular": require("../../assets/fonts/SF-Pro-Rounded-Regular.otf"),
@@ -25,8 +28,14 @@ export default function ButtonCalc(data: ButtonProps) {
         return null;
     }
 
+    function handlerClick() {
+        if (data.iventSymbol && data.getValue && data.setValue) {            
+            logick(data.iventSymbol, data.setValue, data.getValue)
+        }
+    }
+
     return (
-        <View
+        <Pressable
             style={{
                 borderWidth: 0.5,
                 borderColor: "#8A8A8A",
@@ -40,7 +49,10 @@ export default function ButtonCalc(data: ButtonProps) {
                 alignItems: "center",
 
                 borderRadius: 50,
+                cursor: "pointer",
+                userSelect: "none"
             }}
+            onPress={()=> {handlerClick()}}
         >
             {Icon && (
                 <Icon width={"100%"}/>
@@ -60,6 +72,10 @@ export default function ButtonCalc(data: ButtonProps) {
                     {data.icon.text}
                 </Text>
             )}
-        </View>
+        </Pressable>
     );
+}
+
+function setValue(p0: never[]) {
+    throw new Error("Function not implemented.");
 }

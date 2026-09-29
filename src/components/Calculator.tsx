@@ -1,28 +1,19 @@
 import ButtonCalc from "./ButtonCalc";
 import OclockIcon from "../../assets/ocklock.svg";
 import CalculatorIcon from "../../assets/calculator.svg";
-import PlusMinusIcon from "../../assets/plus-minus.svg";
-import Backspace from "../../assets/backspace.svg";
-import Minus from "../../assets/minus.svg";
-import Equals from "../../assets/equals.svg";
-import Plus from "../../assets/plus.svg";
-import Multiply from "../../assets/multiply.svg";
 
-import { FC } from "react";
-import { SvgProps } from "react-native-svg";
 import { useFonts } from "expo-font";
 import { View, Text } from "react-native";
+import { data, dataTab } from "@/data/btn";
+import { useEffect, useState } from "react";
 
 export default function Calculator() {
-    type CalcButton = string | FC<SvgProps>;
+    const [getValue, setValue] = useState<string[]>(["0"]);
+    const [getEndValuet, setEndValuet] = useState("0");
 
-    const data: CalcButton[][] = [
-        [Backspace, "AC", "%", "÷"],
-        ["7", "8", "9", Multiply],
-        ["4", "5", "6", Minus],
-        ["1", "2", "3", Plus],
-        [PlusMinusIcon, "0", ",", Equals],
-    ];
+    useEffect(() => {
+        setEndValuet(getValue.join("").replaceAll("/", "÷").replaceAll("*", "×").replaceAll(".", ","))
+    }, [getValue])
 
     const [fontsLoaded] = useFonts({
         "SF-Pro-Display-Light": require("../../assets/fonts/SFProDisplay-Light.woff"),
@@ -61,6 +52,7 @@ export default function Calculator() {
                     size={false}
                     icon={{ img: CalculatorIcon }}
                     end
+                    setValue={setValue}
                 />
             </View>
 
@@ -87,7 +79,7 @@ export default function Calculator() {
                             fontFamily: "SF-Pro-Display-Light",
                         }}
                     >
-                        6
+                        {getEndValuet}
                     </Text>
                 </View>
 
@@ -137,6 +129,9 @@ export default function Calculator() {
                                             size={true}
                                             icon={icon}
                                             end={end}
+                                            iventSymbol={dataTab[index][itemIndex]}
+                                            getValue={getValue}
+                                            setValue={setValue}
                                         />
                                     </View>
                                 );
